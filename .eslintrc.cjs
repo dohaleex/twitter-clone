@@ -9,7 +9,7 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'prettier',
   ],
-  ignorePatterns: ['dist', '.eslintrc.cjs', 'vite.config.ts'],
+  ignorePatterns: ['dist', '.eslintrc.cjs', 'vite.config.ts', 'firebase.ts'],
   parser: '@typescript-eslint/parser',
   parserOptions: { project: './tsconfig.json' },
   plugins: ['react-refresh'],
