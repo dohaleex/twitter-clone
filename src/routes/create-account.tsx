@@ -2,6 +2,7 @@ import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { FirebaseError } from 'firebase/app';
 import { auth } from '../../firebase';
 
 const Wrapper = styled.div`
@@ -41,6 +42,7 @@ const Input = styled.input`
 
 const Error = styled.span`
   margin-top: 15px;
+  text-align: center;
   font-weight: 600;
   color: tomato;
 `;
@@ -68,6 +70,7 @@ function CreateAccount() {
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setError('');
     if (isLoading || username === '' || email === '' || password === '') return;
     try {
       // 1. 계정 생성
@@ -86,6 +89,7 @@ function CreateAccount() {
       navigate('/');
     } catch (e) {
       // 에러 발생 로직
+      if (e instanceof FirebaseError) setError(e.message);
     } finally {
       setLoading(false);
       // console.log(username, email, password);
