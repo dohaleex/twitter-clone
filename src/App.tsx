@@ -9,11 +9,16 @@ import Layout from './components/layout';
 import Home from './routes/home';
 import LoadingScreen from './components/loading-screen';
 import { auth } from '../firebase';
+import ProtectedRoute from './routes/protected-route';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Layout />,
+    element: (
+      <ProtectedRoute>
+        <Layout />
+      </ProtectedRoute>
+    ),
     children: [
       {
         path: '/',
