@@ -36,7 +36,6 @@ function Login() {
     if (isLoading || email === '' || password === '') return;
     try {
       setLoading(true);
-      // 파이어베이스 로그인 요청
       await signInWithEmailAndPassword(auth, email, password);
       navigate('/');
     } catch (e) {

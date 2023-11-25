@@ -39,26 +39,20 @@ function CreateAccount() {
     setError('');
     if (isLoading || username === '' || email === '' || password === '') return;
     try {
-      // 1. 계정 생성
       setLoading(true);
       const credentials = await createUserWithEmailAndPassword(
         auth,
         email,
         password,
       );
-      // console.log(credentials.user);
-      // 2. 사용자 이름 설정
       await updateProfile(credentials.user, {
         displayName: username,
       });
-      // 3. 홈 경로 이동
       navigate('/');
     } catch (e) {
-      // 에러 발생 로직
       if (e instanceof FirebaseError) setError(e.message);
     } finally {
       setLoading(false);
-      // console.log(username, email, password);
     }
   };
 
