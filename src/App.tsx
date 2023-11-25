@@ -1,5 +1,5 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import * as styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 import { useEffect, useState } from 'react';
 import CreateAccount from './routes/create-account';
@@ -35,7 +35,7 @@ const router = createBrowserRouter([
   },
 ]);
 
-const GlobalStyle = styled.createGlobalStyle`
+const GlobalStyle = createGlobalStyle`
   ${reset}
   * {
     box-sizing: border-box;
@@ -58,6 +58,12 @@ const GlobalStyle = styled.createGlobalStyle`
   }
 `;
 
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  height: 100%;
+`;
+
 function App() {
   const [isLoading, setLoading] = useState(true);
 
@@ -71,10 +77,10 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <Wrapper>
       <GlobalStyle />
       {isLoading ? <LoadingScreen /> : <RouterProvider router={router} />}
-    </div>
+    </Wrapper>
   );
 }
 
