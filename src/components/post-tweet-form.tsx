@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import { addDoc, collection } from 'firebase/firestore';
+import { auth, db } from '../../firebase';
 
 const Form = styled.form`
   display: flex;
@@ -82,14 +84,36 @@ function PostTweetForm() {
     }
   };
 
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const user = auth.currentUser;
+    if (!user || isLoading || tweet === '' || tweet.length > 180) return;
+    try {
+      setLoading(true);
+      await addDoc(collection(db, 'tweets'), {
+        tweet,
+        createdAt: Date.now(),
+        userId: user.uid,
+        username: user.displayName || 'Anonymous',
+      });
+      setTweet('');
+      setFile(null);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <Form>
+    <Form onSubmit={onSubmit}>
       <TextArea
         value={tweet}
         onChange={onChange}
         rows={5}
         maxLength={180}
         placeholder='What is happening?!'
+        required
       />
       <AttachFileButton htmlFor='file'>
         {file ? 'Photo added ✅' : 'Add photo'}
