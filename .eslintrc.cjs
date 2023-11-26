@@ -18,5 +18,7 @@ module.exports = {
     'react-refresh/only-export-components': 'off',
     'import/no-extraneous-dependencies': 'off',
     'no-alert': 'off',
+    'react/jsx-props-no-spreading': 'off',
+    'import/no-cycle': 'off',
   },
 };
